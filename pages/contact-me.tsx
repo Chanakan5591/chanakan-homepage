@@ -56,7 +56,7 @@ const ContactMe: React.FC = () => {
       setStatus(prevStatus => ({ ...prevStatus, submitting: true }))
       axios({
         method: 'POST',
-        url: process.env['FORMSPREE_URL'] || '',
+        url: process.env.NEXT_PUBLIC_CONTACT_FORM_ENDPOINT_URL,
         data: inputs
       }).then(_response => {
         handleServerResponse(
