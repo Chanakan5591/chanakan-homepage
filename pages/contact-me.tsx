@@ -16,7 +16,7 @@ const ContactMe: React.FC = () => {
     email: '',
     message: ''
   })
-  const handleOnChange = useCallback(e => {
+  const handleOnChange = useCallback((e: any) => {
     e.persist()
     setInputs(prev => ({
       ...prev,
@@ -29,7 +29,7 @@ const ContactMe: React.FC = () => {
     })
   }, [])
 
-  const handleServerResponse = useCallback((ok, msg) => {
+  const handleServerResponse = useCallback((ok: any, msg: any) => {
     if (ok) {
       setStatus({
         submitted: true,
@@ -51,7 +51,7 @@ const ContactMe: React.FC = () => {
   }, [])
 
   const handleSubmit = useCallback(
-    e => {
+    (e: any) => {
       e.preventDefault()
       setStatus(prevStatus => ({ ...prevStatus, submitting: true }))
       axios({
