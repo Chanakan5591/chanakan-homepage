@@ -156,6 +156,11 @@
   resolved "https://registry.npmjs.org/@rushstack/eslint-patch/-/eslint-patch-1.0.8.tgz#be3e914e84eacf16dbebd311c0d0b44aa1174c64"
   integrity sha512-ZK5v4bJwgXldAUA8r3q9YKfCwOqoHTK/ZqRjSeRXQrBXWouoPnS4MQtgC4AXGiiBuUu5wxrRgTlv0ktmM4P1Aw==
 
+"@types/ackee-tracker@*":
+  version "5.0.2"
+  resolved "https://registry.npmjs.org/@types/ackee-tracker/-/ackee-tracker-5.0.2.tgz#f8440a4257431ab111ce10caa9394b8fc72e111a"
+  integrity sha512-0ieQOQmXlud6ez+USJLLdiXlo1if+vetB5ep0YpiE2IY+AzuEZe50ohbSNZq2VbbwG9ZBW2GhKShKEczRkmHuw==
+
 "@types/json5@^0.0.29":
   version "0.0.29"
   resolved "https://registry.npmjs.org/@types/json5/-/json5-0.0.29.tgz#ee28707ae94e11d2b827bcbe5270bcea7f3e71ee"
@@ -191,6 +196,13 @@
   version "0.16.2"
   resolved "https://registry.npmjs.org/@types/scheduler/-/scheduler-0.16.2.tgz#1a62f89525723dde24ba1b01b092bf5df8ad4d39"
   integrity sha512-hppQEBDmlwhFAXKJX2KnWLYu5yMfi91yazPb2l+lbJiwW+wdo1gNeRA+3RgNSO39WYX2euey41KEwnqesU2Jew==
+
+"@types/use-ackee@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.npmjs.org/@types/use-ackee/-/use-ackee-2.0.0.tgz#0b29083a18b413215c5add229eb3096866d7e764"
+  integrity sha512-rLKdPEdtXZxfbBfptlRPV1DqJgNSVHYtHotlv8sc3bKmm0LCQ9yNARExGQL4zJ/CF2Wq5sD37LwRRraPiWOewA==
+  dependencies:
+    "@types/ackee-tracker" "*"
 
 "@typescript-eslint/parser@5.10.1":
   version "5.10.1"
@@ -235,6 +247,13 @@
   dependencies:
     "@typescript-eslint/types" "5.10.1"
     eslint-visitor-keys "^3.0.0"
+
+ackee-tracker@^5.0.1:
+  version "5.1.0"
+  resolved "https://registry.npmjs.org/ackee-tracker/-/ackee-tracker-5.1.0.tgz#6c41ea5357973347c7c67a26009053bcc0345def"
+  integrity sha512-A7iKkGyUnEXuOzxultQB7hnm4bStYCo1c38MYRRihBfqUP8AImhtZOODb00t9xrXs/BTsg06bz1MKpXeMs9sYw==
+  dependencies:
+    platform "^1.3.6"
 
 acorn-jsx@^5.3.1:
   version "5.3.2"
@@ -1578,6 +1597,11 @@ picomatch@^2.0.4, picomatch@^2.2.1, picomatch@^2.3.1:
   resolved "https://registry.npmjs.org/picomatch/-/picomatch-2.3.1.tgz#3ba3833733646d9d3e4995946c1365a67fb07a42"
   integrity sha512-JU3teHTNjmE2VCGFzuY8EXzCDVwEqB2a8fsIvwaStHhAWJEeVd1o1QD80CU6+ZdEXXSLbSsuLwJjkCBWqRQUVA==
 
+platform@^1.3.6:
+  version "1.3.6"
+  resolved "https://registry.npmjs.org/platform/-/platform-1.3.6.tgz#48b4ce983164b209c2d45a107adb31f473a6e7a7"
+  integrity sha512-fnWVljUchTro6RiCFvCXBbNhJc2NijN7oIQxbwsyL0buWJPG85v81ehlHI9fXrJsMNgTofEoWIQeClKpgxFLrg==
+
 popmotion@11.0.3:
   version "11.0.3"
   resolved "https://registry.npmjs.org/popmotion/-/popmotion-11.0.3.tgz#565c5f6590bbcddab7a33a074bb2ba97e24b0cc9"
@@ -1990,6 +2014,13 @@ uri-js@^4.2.2:
   integrity sha512-7rKUyy33Q1yc98pQ1DAmLtwX109F7TIfWlW1Ydo8Wl1ii1SeHieeh0HHfPeL2fMXK6z0s8ecKs9frCuLJvndBg==
   dependencies:
     punycode "^2.1.0"
+
+use-ackee@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.npmjs.org/use-ackee/-/use-ackee-3.0.1.tgz#6757c2abea2800369a92eb811ab92d30b67f10d6"
+  integrity sha512-c3PJweMI1mpkYXCzCfzz+sUfjH2BhfwhhiqPzBol0giZDzP0h279XpJLg2VtS4XeIaCACIqEW8Z3yJD7iRdcMQ==
+  dependencies:
+    ackee-tracker "^5.0.1"
 
 util-deprecate@^1.0.2:
   version "1.0.2"
