@@ -7,6 +7,8 @@ function MyApp({ Component, pageProps }: AppProps) {
     <>
       <Navbar />
       <Component {...pageProps} />
+
+      <script async src="https://analytics.chanakancloud.net/tracker.js" data-ackee-server="https://analytics.chanakancloud.net" data-ackee-domain-id="f6707833-45c2-477d-a4db-cd1f39d21733"></script>
     </>
   )
 }
