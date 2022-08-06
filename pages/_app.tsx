@@ -6,7 +6,7 @@ function App({ Component, pageProps }: AppProps) {
 
 	return (
 		<>
-			<script async defer data-website-id="c9223e45-ab29-403c-8e8e-4044633a31a8" src="https://analytics.chanakancloud.net/umami.js"></script>
+			<script async defer data-website-id="70adc570-c6be-4c6c-a610-fa652cdbf201" src="https://analytics.chanakancloud.net/science.js"></script>
 			<Navbar />
 			<Component {...pageProps} />
 		</>
