@@ -19,9 +19,9 @@ const MastHead: React.FC = () => {
             alt='Profile Image' />
         </div>
         <div className={`p-12 -mt-7 font-bold text-black text-center ${styles.head}`}>
-          <h1 className={`mb-2 text-2xl ${styles.image}`}>Chanakan Mungtin</h1>
+          <h1 className={`mb-2 text-white text-2xl ${styles.image}`}>Chanakan Mungtin</h1>
           <h2>
-            <span>Passionate Developer, Photographer</span>
+            <span className='text-white'>Passionate Developer / Photographer</span>
           </h2>
         </div>
       </div>

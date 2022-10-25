@@ -4,14 +4,14 @@ import Head from 'next/head'
 
 const Works: NextPage = () => {
   return (
-      <div className={`bg-black text-white flex flex-col justify-center items-center pt-10 min-h-screen`}>
+    <div className={`bg-black text-white flex flex-col justify-center items-center pt-10 min-h-screen`}>
       <Head>
         <title>Works - Chanakan Mungtin</title>
         <meta name="description" content="A Webpage for Chanakan" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <h1>I have shit to do mf go awae</h1>
+      <h1>There is nothing here yet</h1>
     </div>
   )
 }

@@ -17,7 +17,7 @@ const Navbar: React.FC = () => {
           </span>
         </a>
       </Link>
-      <button className='inline-flex p-3 hover:bg-cyan-400 rounded lg:hidden text-white ml-auto hover:text-white outline-none mr-4' onClick={handleClick}>
+      <button className='inline-flex p-3 hover:bg-cyan-400 rounded lg:hidden text-white ml-auto hover:text-black outline-none mr-4' onClick={handleClick}>
         <svg
           className='w-6 h-6'
           fill='none'
@@ -36,22 +36,22 @@ const Navbar: React.FC = () => {
       <div className={`${active ? '' : 'hidden'} w-full lg:inline-flex lg:flex-grow lg:w-auto mr-4`}>
         <div className='lg:inline-flex lg:flex-row lg:ml-auto lg:w-auto w-full lg:items-center items-start  flex flex-col lg:h-auto'>
           <Link href='/'>
-            <a className='lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-white font-bold items-center justify-center hover:bg-purple-600 hover:text-white '>
+            <a className='lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-white font-bold items-center justify-center hover:bg-cyan-400 hover:text-black'>
               Home
             </a>
           </Link>
           <Link href='/works'>
-            <a className='lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-white font-bold items-center justify-center hover:bg-violet-400 hover:text-white'>
+            <a className='lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-white font-bold items-center justify-center hover:bg-cyan-400 hover:text-black'>
               Works
             </a>
           </Link>
           <Link href='/'>
-            <a className='lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-white font-bold items-center justify-center hover:bg-fuchsia-400 hover:text-white'>
+            <a className='lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-white font-bold items-center justify-center hover:bg-cyan-400 hover:text-black'>
               About me
             </a>
           </Link>
           <Link href='/contact-me'>
-            <a className='lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-white font-bold items-center justify-center hover:bg-cyan-400 hover:text-white'>
+            <a className='lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-white font-bold items-center justify-center hover:bg-cyan-400 hover:text-black'>
               Contact me
             </a>
           </Link>

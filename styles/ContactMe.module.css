@@ -10,9 +10,12 @@
 backdrop-filter: blur(5px);
 -webkit-backdrop-filter:blur(5px);
 box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37 );
-background-image: linear-gradient(155deg, rgba(255, 255, 255, 0.49), rgba(255, 255, 255, 0));
 border-radius: 30px;
 border: 0px solid rgba( 255, 255, 255, 1 );
+}
+
+.formcard ::placeholder {
+  color: #444;
 }
 
 .inputbox {
