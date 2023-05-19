@@ -18,4 +18,28 @@
 		am currently interested in SDR and aviation stuff in general, and also rocketry. I also enjoy
 		photography from time to time, while not being too serious about it.
 	</span>
+	<h1 class="font-semibold text-2xl mt-2">Bio</h1>
+	<div class="flex flex-row gap-x-2">
+		<ul>
+			<li>
+				<span class="font-semibold">2006</span>
+			</li>
+			<li>
+				<span class="font-semibold">2010</span>
+			</li>
+		</ul>
+		<ul>
+			<li>
+				<span class="font-medium">Born in Bangkok</span>
+			</li>
+			<li>
+				<span class="font-medium">Do stuff</span>
+			</li>
+		</ul>
+	</div>
+	<h1 class="font-semibold text-2xl mt-2">Skills</h1>
+	<ul>
+		<li>hihi</li>
+		<li>hi2hi2</li>
+	</ul>
 </div>
