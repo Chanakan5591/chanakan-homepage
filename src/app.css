@@ -10,3 +10,7 @@
 .center-width {
   width: min(48rem, 100% - 4rem);
 }
+
+.title {
+  font-family: 'Literata', serif;
+}
