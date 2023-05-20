@@ -3,9 +3,11 @@
 	import Header from '../lib/header.svelte';
 </script>
 
-<div class="fixed mix-blend-difference w-full">
-	<Header />
-</div>
-<div class="mx-auto pt-16">
-	<slot />
+<div class="h-screen">
+	<div class="fixed mix-blend-difference w-full">
+		<Header />
+	</div>
+	<div class="mx-4 pt-16 h-full">
+		<slot />
+	</div>
 </div>
