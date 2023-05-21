@@ -7,7 +7,7 @@
 	<div class="fixed mix-blend-difference w-full">
 		<Header />
 	</div>
-	<div class="mx-4 pt-16 h-full">
+	<div class="mx-4 pt-16 h-screen">
 		<slot />
 	</div>
 </div>
