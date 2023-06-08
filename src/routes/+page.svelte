@@ -34,7 +34,7 @@
 
 <!-- new -->
 <div
-	class="flex flex-col gap-x-8 md:flex-row justify-center md:justify-between w-screen max-w-[60%] mx-auto"
+	class="flex flex-col md:gap-x-8 md:flex-row justify-center md:justify-between w-screen max-w-[60%] mx-auto"
 >
 	<div class="flex flex-col">
 		<h1 class="text-5xl title mb-2">Skills</h1>
@@ -58,7 +58,7 @@
 </div>
 
 <div class="flex flex-col gap-x-8 mt-16 justify-center max-w-xl mx-auto mb-8 pb-8">
-	<span class="text-5xl font-bold font-serif mb-4">Contact Us</span>
+	<span class="text-5xl font-bold font-serif mb-4">Contact Me</span>
 	<form
 		class="flex flex-col gap-y-2 justify-center"
 		action="https://formspree.io/xoqrkkbg"
