@@ -36,7 +36,7 @@
 <div
 	class="flex flex-col md:gap-x-8 md:flex-row justify-center md:justify-between w-screen max-w-[60%] mx-auto"
 >
-	<div class="flex flex-col">
+	<div class="flex flex-col self-end md:self-start mt-4 md:mt-0">
 		<h1 class="text-5xl title mb-2">Skills</h1>
 		<ul class="text-xl list-disc list-inside">
 			<li>Programming</li>
