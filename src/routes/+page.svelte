@@ -1,11 +1,9 @@
 <script lang="ts">
-	import { enhance } from '$app/forms';
 	import pfp from '$lib/assets/pfp.jpeg';
-	import { ArrowDown } from 'lucide-svelte';
 </script>
 
 <!-- Masthead -->
-<div class="flex flex-col text-6xl md:text-8xl lg:text-9xl gap-y-8 m-4 mb-16 lg:h-full lg:mb-0">
+<div class="flex flex-col text-6xl md:text-8xl lg:text-9xl gap-y-8 m-4 mb-16">
 	<div class="flex flex-col-reverse md:flex-row justify-between items-center">
 		<div class="h-fit">
 			<h1 class="title">Passionate</h1>
@@ -33,10 +31,8 @@
 </div>
 
 <!-- new -->
-<div
-	class="flex flex-col md:gap-x-8 md:flex-row justify-center md:justify-between w-screen max-w-[60%] mx-auto"
->
-	<div class="flex flex-col self-end md:self-start mt-4 md:mt-0">
+<div class="flex flex-col md:gap-x-8 md:flex-row justify-between w-screen max-w-[60%] md:mx-auto">
+	<div class="flex flex-col mt-4 md:mt-0">
 		<h1 class="text-5xl title mb-2">Skills</h1>
 		<ul class="text-xl list-disc list-inside">
 			<li>Programming</li>
@@ -45,7 +41,7 @@
 			<li>Data Analysis</li>
 		</ul>
 	</div>
-	<div class="flex flex-col self-end md:self-start mt-4 md:mt-0">
+	<div class="flex flex-col mt-4 md:mt-0">
 		<h1 class="text-5xl title mb-2">Education</h1>
 		<ul class="text-xl list-disc list-inside">
 			<li><span class="font-bold">2008 - 2017</span> Prempracha Wattana School</li>
