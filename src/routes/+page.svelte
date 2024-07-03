@@ -35,9 +35,8 @@
 			{#if showName}
 				<div class="flex flex-col mt-8 max-w-3xl" transition:slide>
 					<span class="text-lg mr-4">
-						Hello! I am Chanakan Mungtin. I am a passionate developer and a student resided in
-						Thailand. I am currently interested in SDR and aviation stuff in general, and also
-						rocketry. I also enjoy photography from time to time, while not being too serious about
+						Hello! I am Chanakan Moongthin. I am a passionate developer and a student resided in
+						Thailand. I am a man with multiple hobbies, including, but not limited to: <span class='font-semibold'>Software-Defined Radio</span>, <span class='font-semibold'>Aviation</span>, <span class='font-semibold'>GIS</span>, <span class='font-semibold'>Software & Web Development</span>, Making things with <span class='font-semibold'>LLMs</span>, <span class='font-semibold'>Graphics Designing</span>, <span class='font-semibold'>Music Making</span> and currently mainly interested in <span class='font-bold'>Production</span>. I also enjoy <span class='font-bold'>Photography</span> from time to time as mostly film photography, while not being too serious about
 						it.
 					</span>
 				</div>
@@ -55,7 +54,7 @@
 			<h1 class="title leading-none" transition:slide={{ duration: 1000, axis: 'x' }}>Chanakan</h1>
 		{/if}
 		{#if showLast}
-			<h1 class="title leading-snug" transition:slide={{ duration: 1000, axis: 'x' }}>Mungtin</h1>
+			<h1 class="title leading-snug" transition:slide={{ duration: 1000, axis: 'x' }}>Moongthin</h1>
 		{/if}
 	</div>
 </div>
@@ -82,7 +81,9 @@
 				<li>
 					<span class="font-bold">2018 - 2020</span> Kanjanapisek Witthayalai Nakornphathom School
 				</li>
-				<li><span class="font-bold">2021 - Present</span> Chitralada Vocational School</li>
+				<li><span class="font-bold">2021 - 2023</span> Chitralada Vocational School</li>
+				<li>
+					<span class="font-bold">2024 - Present</span> ICT @ Mahidol University</li>
 			</ul>
 		</div>
 	</div>
