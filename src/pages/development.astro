@@ -1,0 +1,218 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { cachedUserProfile, cachedPinnedRepos, cachedTopRepos, cachedLanguageStats } from "../github";
+import ContributionGrid from "../components/ContributionGrid.svelte";
+import RepoCard from "../components/RepoCard.svelte";
+
+const GITHUB_LOGIN = "Chanakan5591";
+
+let profile: any = null;
+let pinnedRepos: any[] = [];
+let topRepos: any[] = [];
+let languages: any[] = [];
+let error: string | null = null;
+
+try {
+  [profile, pinnedRepos, topRepos, languages] = await Promise.all([
+    cachedUserProfile(GITHUB_LOGIN),
+    cachedPinnedRepos(GITHUB_LOGIN),
+    cachedTopRepos(GITHUB_LOGIN),
+    cachedLanguageStats(GITHUB_LOGIN),
+  ]);
+} catch (e) {
+  error = e instanceof Error ? e.message : "Failed to fetch GitHub data";
+  console.error("GitHub fetch error:", e);
+}
+
+const contributionWeeks = profile?.contributionsCollection?.contributionCalendar?.weeks || [];
+const totalContributions = profile?.contributionsCollection?.contributionCalendar?.totalContributions || 0;
+const totalCommits = profile?.contributionsCollection?.totalCommitContributions || 0;
+const totalPRs = profile?.contributionsCollection?.totalPullRequestContributions || 0;
+const totalRepos = profile?.repositories?.totalCount || 0;
+
+// Use pinned repos if available, otherwise fall back to top repos
+const displayRepos = pinnedRepos.length > 0 ? pinnedRepos : topRepos.slice(0, 6);
+---
+
+<Layout>
+  <main class="min-h-screen w-full bg-primary text-off-white font-mono">
+    <div class="max-w-[1600px] mx-auto border-x border-off-white/10">
+
+      <!-- Terminal Header Bar -->
+      <header class="border-b border-off-white/10">
+        <!-- Top bar (breadcrumb style) -->
+        <div class="flex justify-between items-center px-4 py-2 border-b border-off-white/10 text-xs tracking-widest text-off-white/40">
+          <div class="flex items-center gap-2">
+            <a href="/" class="hover:text-accent-green transition-colors">~/home</a>
+            <span>/</span>
+            <span class="text-accent-green">development</span>
+          </div>
+          <div class="flex items-center gap-4">
+            <span class="hidden md:inline">pid: {Math.floor(Math.random() * 9999).toString().padStart(4, '0')}</span>
+            <span>{new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
+          </div>
+        </div>
+
+        <!-- Hero -->
+        <div class="p-6 md:p-12 lg:p-16">
+          <div class="flex items-start justify-between gap-4 mb-6">
+            <div class="text-xs uppercase tracking-[0.24em] text-off-white/40">Software Engineering / Development</div>
+            <div class="text-xs uppercase tracking-[0.18em] text-off-white/40 hidden md:block">Live from GitHub</div>
+          </div>
+
+          <h1 class="font-headline text-5xl md:text-7xl lg:text-8xl leading-[0.9] tracking-tight mb-8">
+            <span class="text-accent-green">&gt;_</span> Development
+          </h1>
+
+          <p class="max-w-2xl text-lg md:text-xl leading-relaxed text-off-white/60 mb-8">
+            Open-source projects, side experiments, infrastructure work, and cybersecurity explorations. Everything here is pulled live from GitHub. Like Elliot Alderson, I wanted to save the world. We start with cleaner code.
+          </p>
+
+          {!error && profile && (
+          <!-- Stats Strip -->
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-px bg-off-white/10 border border-off-white/10 rounded">
+            <div class="bg-primary p-4 md:p-6">
+              <div class="text-xs uppercase tracking-widest text-off-white/40 mb-1">Repositories</div>
+              <div class="text-2xl md:text-3xl font-headline text-accent-green">{totalRepos}</div>
+            </div>
+            <div class="bg-primary p-4 md:p-6">
+              <div class="text-xs uppercase tracking-widest text-off-white/40 mb-1">Contributions</div>
+              <div class="text-2xl md:text-3xl font-headline text-accent-green">{totalContributions.toLocaleString()}</div>
+            </div>
+            <div class="bg-primary p-4 md:p-6">
+              <div class="text-xs uppercase tracking-widest text-off-white/40 mb-1">Commits</div>
+              <div class="text-2xl md:text-3xl font-headline text-accent-green">{totalCommits.toLocaleString()}</div>
+            </div>
+            <div class="bg-primary p-4 md:p-6">
+              <div class="text-xs uppercase tracking-widest text-off-white/40 mb-1">Pull Requests</div>
+              <div class="text-2xl md:text-3xl font-headline text-accent-green">{totalPRs}</div>
+            </div>
+          </div>
+          )}
+        </div>
+      </header>
+
+      {error && (
+        <div class="p-8 text-center">
+          <p class="text-accent-orange font-mono text-sm">[error] {error}</p>
+          <p class="text-off-white/40 text-xs mt-2">GitHub API may be rate-limited or the token may have expired.</p>
+        </div>
+      )}
+
+      {!error && (
+      <!-- Contribution Graph Section -->
+      <section class="border-b border-off-white/10 p-6 md:p-12 lg:p-16">
+        <div class="flex items-center gap-3 mb-8">
+          <span class="text-accent-green text-sm">■</span>
+          <h2 class="text-xs uppercase tracking-[0.24em] text-off-white/50">Contribution Activity</h2>
+          <span class="text-xs text-off-white/30 ml-auto">{totalContributions.toLocaleString()} in the last year</span>
+        </div>
+        <ContributionGrid weeks={contributionWeeks} client:load />
+      </section>
+
+      <!-- Repositories Section -->
+      <section class="border-b border-off-white/10 p-6 md:p-12 lg:p-16">
+        <div class="flex items-center gap-3 mb-8">
+          <span class="text-accent-green text-sm">■</span>
+          <h2 class="text-xs uppercase tracking-[0.24em] text-off-white/50">
+            {pinnedRepos.length > 0 ? 'Pinned Repositories' : 'Top Repositories'}
+          </h2>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {displayRepos.map((repo: any) => (
+            <RepoCard repo={repo} client:load />
+          ))}
+        </div>
+      </section>
+
+      <!-- Languages Section -->
+      )}
+      {!error && languages.length > 0 && (
+      <section class="border-b border-off-white/10 p-6 md:p-12 lg:p-16">
+        <div class="flex items-center gap-3 mb-8">
+          <span class="text-accent-green text-sm">■</span>
+          <h2 class="text-xs uppercase tracking-[0.24em] text-off-white/50">Language Breakdown</h2>
+        </div>
+        <div class="space-y-4 max-w-2xl">
+          {languages.map((lang: any) => (
+            <div>
+              <div class="flex justify-between items-center mb-1">
+                <span class="text-sm flex items-center gap-2">
+                  <span class="w-2.5 h-2.5 rounded-full inline-block" style={`background-color: ${lang.color}`}></span>
+                  {lang.name}
+                </span>
+                <span class="text-xs text-off-white/40">{lang.percentage}%</span>
+              </div>
+              <div class="h-1.5 bg-off-white/5 rounded-full overflow-hidden">
+                <div 
+                  class="h-full rounded-full transition-all duration-1000"
+                  style={`width: ${lang.percentage}%; background-color: ${lang.color}`}
+                ></div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+      )}
+
+      <!-- Beyond Code Section -->
+      <section class="border-b border-off-white/10 p-6 md:p-12 lg:p-16">
+        <div class="flex items-center gap-3 mb-8">
+          <span class="text-accent-green text-sm">■</span>
+          <h2 class="text-xs uppercase tracking-[0.24em] text-off-white/50">Beyond the Editor</h2>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-off-white/10">
+          <div class="bg-primary p-6">
+            <div class="text-xs uppercase tracking-widest text-accent-green/70 mb-2">Homelab</div>
+            <div class="font-headline text-lg mb-2">Proxmox Cluster</div>
+            <p class="text-sm text-off-white/50 leading-relaxed">Self-hosted infrastructure running VMs, containers, and networking experiments. Think Pied Piper's server rack, except this one actually has a business model.</p>
+          </div>
+          <div class="bg-primary p-6">
+            <div class="text-xs uppercase tracking-widest text-accent-green/70 mb-2">Cybersecurity</div>
+            <div class="font-headline text-lg mb-2">Offense & Defense</div>
+            <p class="text-sm text-off-white/50 leading-relaxed">CTFs, penetration testing, network security, and threat analysis. Control may be an illusion, but firewalls aren't. Less Elliot in a hoodie, more responsible disclosure.</p>
+          </div>
+          <div class="bg-primary p-6">
+            <div class="text-xs uppercase tracking-widest text-accent-green/70 mb-2">Interests</div>
+            <div class="font-headline text-lg mb-2">Server Management</div>
+            <p class="text-sm text-off-white/50 leading-relaxed">Linux administration, Docker, reverse proxies, DNS. The invisible plumbing that people rely on every day without thinking about it. The least we can do is keep it running.</p>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- Philosophy -->
+      <section class="border-b border-off-white/10 p-8 md:p-14 lg:p-20 bg-off-white/[0.02]">
+        <div class="max-w-3xl mx-auto text-center space-y-6">
+          <div class="text-[10px] font-mono uppercase tracking-[0.3em] text-off-white/25 flex items-center justify-center gap-4">
+            <span class="w-8 h-px bg-off-white/10"></span>
+            Engineering Philosophy
+            <span class="w-8 h-px bg-off-white/10"></span>
+          </div>
+          <blockquote class="font-headline text-xl md:text-3xl leading-relaxed text-off-white/70 italic">
+            Gavin Belson said he didn't want to live in a world where someone else makes the world a better place better than we do. Neither do I. So we ship code.
+          </blockquote>
+          <p class="font-mono text-xs text-off-white/20 mt-8">
+            The world isn't dangerous because of those who do evil, but because of those who look on and do nothing. So we ship patches, too.
+          </p>
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <footer class="p-4 md:p-8 flex justify-between items-center text-xs text-off-white/30">
+        <div class="flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-accent-green animate-pulse"></span>
+          <span>connected to github.com/{GITHUB_LOGIN}</span>
+        </div>
+        <a href="/" class="uppercase tracking-widest hover:text-accent-green transition-colors">← Back to Index</a>
+      </footer>
+
+    </div>
+  </main>
+</Layout>
+
+<style>
+  .font-mono {
+    font-family: var(--font-mono);
+  }
+</style>

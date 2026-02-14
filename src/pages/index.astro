@@ -1,11 +1,318 @@
 ---
-import Welcome from '../components/Welcome.astro';
 import Layout from '../layouts/Layout.astro';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const projects = [
+  {
+    title: "Photography",
+    category: "Visual Stories",
+    image: "https://images.unsplash.com/photo-1495745966610-2a67f2297e5e?w=1200&h=800&fit=crop&q=80",
+    year: "2024",
+    description: "Personal photos, mostly street and urban, shot and color-graded to look like cinema stills.",
+    type: "Gallery",
+    color: "group-hover:text-accent-amber",
+    bg: "group-hover:bg-accent-amber",
+    link: "/photography"
+  },
+  {
+    title: "Development",
+    category: "Software Engineering",
+    image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1200&h=800&fit=crop&q=80",
+    year: "2024",
+    description: "Things I've built: open-source tools, side projects, and infrastructure experiments.",
+    type: "Projects",
+    color: "group-hover:text-accent-green",
+    bg: "group-hover:bg-accent-green",
+    link: "/development"
+  },
+  {
+    title: "Research",
+    category: "Academic Work",
+    image: "https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=1200&h=800&fit=crop&q=80",
+    year: "2023",
+    description: "Research work in health informatics and applied AI.",
+    type: "Archive",
+    color: "group-hover:text-accent-purple",
+    bg: "group-hover:bg-accent-purple",
+    link: "/research"
+  }
+];
 ---
 
 <Layout>
-	<Welcome />
+  <main class="min-h-screen w-full bg-off-white text-primary">
+    <!-- Main Container with Borders -->
+    <div class="max-w-[1600px] mx-auto border-x border-primary">
+      
+      <!-- Header Section (Newspaper Masthead) -->
+      <header class="border-b border-primary bg-off-white">
+        <!-- Meta Bar -->
+        <div class="flex justify-between items-center px-4 py-2 border-b border-primary text-xs uppercase tracking-widest font-medium">
+          <span>Vol. 01</span>
+          <span class="hidden md:inline">Nonthaburi, Thailand</span>
+          <span>{new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}</span>
+        </div>
+
+        <!-- Masthead Title -->
+        <div class="py-16 md:py-24 px-4 text-center border-b border-primary relative overflow-hidden">
+          <h1 class="font-headline text-[15.5vw] md:text-[13rem] leading-[0.8] text-primary flex justify-center select-none">
+            <span class="relative">C</span>
+            <span class="relative -ml-[0.01em]">H</span>
+            <span class="relative -ml-[0.04em]">A</span>
+            <span class="relative -ml-[0.02em]">N</span>
+            <span class="relative -ml-[0.04em]">A</span>
+            <span class="relative -ml-[0.02em]">K</span>
+            <span class="relative -ml-[0.04em]">A</span>
+            <span class="relative -ml-[0.02em]">N</span>
+          </h1>
+          <div class="mt-6 flex justify-center items-center gap-4">
+            <span class="h-px w-12 bg-primary hidden md:block"></span>
+            <p class="text-lg md:text-2xl font-serif italic text-primary/80">Software Engineer & Researcher</p>
+            <span class="h-px w-12 bg-primary hidden md:block"></span>
+          </div>
+          
+          <!-- Decorative elements -->
+          <div class="absolute top-4 right-4 animate-spin-slow hidden md:block">
+             <svg width="100" height="100" viewBox="0 0 100 100" class="text-accent-orange fill-current opacity-80">
+                <path id="curve" d="M 50, 50 m -37, 0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0" fill="transparent"/>
+                <text font-size="11">
+                  <textPath href="#curve" startOffset="0%" textLength="232" lengthAdjust="spacing">
+                    SCROLL TO EXPLORE • SCROLL TO EXPLORE •&nbsp;
+                  </textPath>
+                </text>
+             </svg>
+          </div>
+        </div>
+
+        <!-- Section Rail (editorial strip) -->
+        <div class="border-t border-b border-primary bg-off-white/80 backdrop-blur-sm">
+          <div class="grid grid-cols-2 md:grid-cols-4">
+            <a href="#profile" class="group p-4 md:p-6 border-r border-primary/50 hover:bg-accent-orange hover:text-white transition-colors duration-300">
+              <div class="text-[0.65rem] tracking-[0.24em] uppercase font-medium opacity-70 group-hover:opacity-100">Folio</div>
+              <div class="font-headline text-xl">Profile</div>
+              <p class="text-xs mt-2 text-primary/70 group-hover:text-white/90 leading-relaxed">Origin, practice, and current focus.</p>
+            </a>
+            <a href="#work" class="group p-4 md:p-6 border-r border-primary/50 hover:bg-accent-blue hover:text-white transition-colors duration-300">
+              <div class="text-[0.65rem] tracking-[0.24em] uppercase font-medium opacity-70 group-hover:opacity-100">Index</div>
+              <div class="font-headline text-xl">Collections</div>
+              <p class="text-xs mt-2 text-primary/70 group-hover:text-white/90 leading-relaxed">Photography, development, and research.</p>
+            </a>
+            <a href="https://github.com/Chanakan5591" target="_blank" class="group p-4 md:p-6 border-r border-primary/50 hover:bg-accent-green hover:text-white transition-colors duration-300">
+              <div class="text-[0.65rem] tracking-[0.24em] uppercase font-medium opacity-70 group-hover:opacity-100">Archive</div>
+              <div class="font-headline text-xl">Code Repository</div>
+              <p class="text-xs mt-2 text-primary/70 group-hover:text-white/90 leading-relaxed">Open-source projects and experiments on GitHub.</p>
+            </a>
+            <a href="#contact" class="group p-4 md:p-6 hover:bg-accent-purple hover:text-white transition-colors duration-300">
+              <div class="text-[0.65rem] tracking-[0.24em] uppercase font-medium opacity-70 group-hover:opacity-100">Dispatch</div>
+              <div class="font-headline text-xl">Inquiries</div>
+              <p class="text-xs mt-2 text-primary/70 group-hover:text-white/90 leading-relaxed">Commissions, collaborations, and notes.</p>
+            </a>
+          </div>
+        </div>
+      </header>
+
+      <!-- Profile Spread (visually separated) -->
+      <section id="profile" class="border-b border-primary bg-primary text-off-white">
+        <div class="p-6 md:p-12 lg:p-16 space-y-8">
+          <div class="flex items-start justify-between gap-4">
+            <div class="text-xs md:text-sm uppercase tracking-[0.24em] font-medium">Profile / Feature</div>
+            <div class="text-xs md:text-sm uppercase tracking-[0.18em] font-medium opacity-70">Nonthaburi · Engineering · Research</div>
+          </div>
+          <div class="max-w-5xl space-y-6">
+            <p class="font-headline text-3xl md:text-5xl leading-tight">
+              Chanakan Moongthin is a <span class="text-accent-green">software engineer</span> and <span class="text-accent-purple">undergraduate researcher</span> based in Nonthaburi, Thailand. He builds web systems, runs a homelab, and publishes research in <span class="text-accent-orange">health informatics</span>.
+            </p>
+
+            <div id="profile-expanded" class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]">
+              <div class="overflow-hidden">
+                <div class="space-y-6 pt-6 border-t border-off-white/20 mt-2">
+                  <p class="font-headline text-3xl md:text-5xl leading-tight">
+                    When he's not writing code, he's usually deep in a <span class="text-accent-purple">research paper</span> or out with a camera. He shoots on a <span class="text-accent-orange">Fujifilm X-A1</span> and grades everything to look like cinema stills.
+                  </p>
+                  <p class="font-serif text-lg md:text-xl leading-relaxed text-off-white/85">
+                    He collects <span class="text-accent-orange">mechanical watches</span>, writes with a Sailor 1911L, cares for leather shoes probably more than he should, and enjoys fragrance. The kind of person who appreciates things that are <span class="text-accent-green">well-made and built to last</span>.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <button id="read-more-btn" class="group flex items-center gap-3 text-sm uppercase tracking-widest font-medium text-accent-orange hover:text-white transition-colors cursor-pointer pt-2">
+              <span class="w-2 h-2 bg-current rounded-full"></span>
+              <span id="read-more-text">[ Read Full Profile ]</span>
+            </button>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 text-sm uppercase tracking-widest font-medium">
+            <div class="border-t border-off-white/30 pt-4">
+              <div class="opacity-70 mb-2">Focus</div>
+              <div>Web development · Infrastructure · Research</div>
+            </div>
+            <div class="border-t border-off-white/30 pt-4">
+              <div class="opacity-70 mb-2">Current</div>
+              <div>Health informatics · Open-source tooling</div>
+            </div>
+            <div class="border-t border-off-white/30 pt-4">
+              <div class="opacity-70 mb-2">Availability</div>
+              <div>Open to commissions and collaborations</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Projects Header -->
+      <div id="work" class="sticky top-0 z-20 border-b border-primary bg-off-white text-primary">
+        <div class="flex justify-between items-center p-4 md:p-6 uppercase text-xs md:text-sm tracking-widest font-medium">
+          <span>Index / Collections</span>
+          <span>(2022 — Present)</span>
+        </div>
+      </div>
+
+      <!-- Projects Section -->
+      <div class="flex flex-col">
+        {projects.map((project, index) => {
+          const isDark = index % 2 === 0;
+          const bgClass = isDark ? 'bg-primary' : 'bg-off-white';
+          const textClass = isDark ? 'text-off-white' : 'text-primary';
+          const borderClass = isDark ? 'border-off-white/20' : 'border-primary';
+          const metaClass = isDark ? 'text-off-white/60' : 'text-primary/60';
+          const serifClass = isDark ? 'text-off-white/85' : 'text-primary/85';
+
+          return (
+            <a href={project.link} class="group block">
+              <section class={`border-b ${borderClass} ${bgClass} ${textClass} transition-colors duration-500`}>
+                <div class="grid grid-cols-1 lg:grid-cols-12">
+                  
+                  <!-- Text Section (Mimics Profile Layout) -->
+                  <div class={`lg:col-span-7 p-8 md:p-12 lg:p-16 flex flex-col justify-between ${index % 2 === 1 ? 'lg:order-2 lg:border-l' : 'lg:order-1 lg:border-r'} ${borderClass}`}>
+                    
+                    <div class="space-y-8">
+                      <!-- Meta -->
+                      <div class="flex items-start justify-between gap-4">
+                        <div class={`text-xs md:text-sm uppercase tracking-[0.24em] font-medium ${metaClass}`}>
+                          {project.category} / Collection
+                        </div>
+                        <div class={`text-xs md:text-sm uppercase tracking-[0.18em] font-medium opacity-70`}>
+                          {project.year} · Index
+                        </div>
+                      </div>
+
+                      <!-- Main Content -->
+                      <div class="space-y-6">
+                        <h3 class={`font-headline text-4xl md:text-6xl lg:text-7xl leading-[0.9] ${project.color} transition-colors duration-300`}>
+                          {project.title}
+                        </h3>
+                        <p class={`font-serif text-xl md:text-2xl leading-relaxed ${serifClass} max-w-2xl`}>
+                          {project.description}
+                        </p>
+                      </div>
+                    </div>
+
+                    <!-- Footer Columns -->
+                    <div class={`grid grid-cols-2 gap-4 md:gap-8 text-xs md:text-sm uppercase tracking-widest font-medium mt-12 pt-8 border-t ${isDark ? 'border-off-white/30' : 'border-primary/30'}`}>
+                      <div>
+                        <div class="opacity-60 mb-2">Type</div>
+                        <div>{project.type}</div>
+                      </div>
+                      <div class="text-right">
+                        <div class="opacity-60 mb-2">Action</div>
+                        <span class={`group-hover:underline decoration-1 underline-offset-4 ${project.color}`}>
+                          Explore Collection ↗
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Image Section -->
+                  <div class={`lg:col-span-5 relative min-h-[40vh] lg:min-h-full overflow-hidden ${index % 2 === 1 ? 'lg:order-1' : 'lg:order-2'}`}>
+                     <div class={`absolute inset-0 ${isDark ? 'bg-primary/20' : 'bg-primary/5'} group-hover:bg-transparent transition-colors duration-500 z-10`}></div>
+                     <img 
+                        src={project.image} 
+                        alt={project.title}
+                        class="absolute inset-0 w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105"
+                     />
+                  </div>
+
+                </div>
+              </section>
+            </a>
+          );
+        })}
+      </div>
+
+      <!-- Footer -->
+      <footer id="contact" class="grid grid-cols-1 md:grid-cols-12 border-b border-primary">
+        <div class="md:col-span-8 p-8 md:p-16 border-b md:border-b-0 md:border-r border-primary flex flex-col justify-center">
+          <span class="text-accent-purple uppercase text-xs tracking-widest mb-4">Get in touch</span>
+          <h2 class="font-headline text-5xl md:text-7xl lg:text-8xl mb-8 leading-[0.9]">Let's work<br/>together</h2>
+          <p class="max-w-xl text-xl md:text-2xl text-primary mb-12 font-headline leading-relaxed">
+            Always interested in <span class="italic text-accent-orange">interesting problems</span>. If you have a project or idea, I'd like to hear about it.
+          </p>
+          <div>
+            <a href="mailto:hello@chanakanlabs.com" class="inline-block bg-primary text-off-white px-10 py-5 rounded-full text-xl font-medium hover:bg-accent-green hover:scale-105 transition-all duration-300 shadow-xl">
+              Start a conversation
+            </a>
+          </div>
+        </div>
+        <div class="md:col-span-4 p-4 md:p-8 flex flex-col justify-end">
+          <div class="space-y-2 text-sm uppercase tracking-widest">
+            <div class="flex justify-between border-b border-primary pb-2">
+              <span>Location</span>
+              <span>Nonthaburi, TH</span>
+            </div>
+            <div class="flex justify-between border-b border-primary pb-2">
+              <span>Time</span>
+              <span id="time-display">00:00 AM</span>
+            </div>
+            <div class="flex justify-between pt-2">
+              <span>Version</span>
+              <span>2025.1.0</span>
+            </div>
+          </div>
+        </div>
+      </footer>
+      
+      <!-- Bottom Copyright -->
+      <div class="p-4 flex justify-between items-center text-xs uppercase tracking-widest text-primary">
+        <span>© Chanakan Moongthin</span>
+        <span>All Rights Reserved</span>
+      </div>
+
+    </div>
+  </main>
+
+  <script>
+    // Simple time update script
+    function updateTime() {
+      const timeDisplay = document.getElementById('time-display');
+      if (timeDisplay) {
+        const now = new Date();
+        timeDisplay.textContent = now.toLocaleTimeString('en-US', { 
+          hour: '2-digit', 
+          minute: '2-digit',
+          timeZone: 'Asia/Bangkok',
+        });
+      }
+    }
+    setInterval(updateTime, 1000);
+    updateTime();
+
+    // Read More Toggle
+    const btn = document.getElementById('read-more-btn');
+    const content = document.getElementById('profile-expanded');
+    const btnText = document.getElementById('read-more-text');
+
+    if (btn && content && btnText) {
+      btn.addEventListener('click', () => {
+        const isExpanded = content.classList.contains('grid-rows-[1fr]');
+        if (isExpanded) {
+          content.classList.remove('grid-rows-[1fr]');
+          content.classList.add('grid-rows-[0fr]');
+          btnText.textContent = '[ Read Full Profile ]';
+        } else {
+          content.classList.remove('grid-rows-[0fr]');
+          content.classList.add('grid-rows-[1fr]');
+          btnText.textContent = '[ Close Profile ]';
+        }
+      });
+    }
+  </script>
 </Layout>

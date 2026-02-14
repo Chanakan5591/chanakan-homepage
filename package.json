@@ -9,6 +9,21 @@
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^5.15.1"
+    "@astrojs/vercel": "^8.1.4",
+    "@astrojs/svelte": "^7.2.0",
+    "@lucide/astro": "^0.548.0",
+    "@tailwindcss/vite": "^4.1.16",
+    "@upstash/redis": "^1.36.2",
+    "astro": "^5.15.1",
+    "gsap": "^3.13.0",
+    "svelte": "^5.42.3",
+    "tailwindcss": "^4.1.16",
+    "typescript": "^5.9.3"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "sharp"
+    ]
   }
 }

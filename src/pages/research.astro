@@ -1,0 +1,387 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { cachedOrcidWorks } from "../orcid";
+
+const ORCID_ID = "0009-0007-4815-7700";
+
+let works: any[] = [];
+let error: string | null = null;
+
+try {
+  works = await cachedOrcidWorks(ORCID_ID);
+} catch (e) {
+  error = e instanceof Error ? e.message : "Failed to fetch ORCID data";
+  console.error("ORCID fetch error:", e);
+}
+
+function formatType(type: string) {
+  const map: Record<string, string> = {
+    'preprint': 'Preprint',
+    'journal-article': 'Journal Article',
+    'conference-paper': 'Conference Paper',
+    'book': 'Book',
+    'book-chapter': 'Book Chapter',
+    'dissertation': 'Dissertation',
+    'other': 'Other',
+  };
+  return map[type] || type.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+}
+
+function formatDate(year: string | null, month: string | null) {
+  if (!year) return 'Date unknown';
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  if (month) return `${months[parseInt(month) - 1]} ${year}`;
+  return year;
+}
+
+const researchAreas = [
+  { name: 'Health Informatics', desc: 'Digital health systems, clinical data workflows, and interoperability standards.', color: '#9D00FF', status: 'Active' },
+  { name: 'Natural Language Processing', desc: 'Thai medical text analysis, clinical note extraction, and named entity recognition.', color: '#00CC66', status: 'Active' },
+  { name: 'Language Models', desc: 'Fine‑tuning and evaluation of LLMs for clinical decision support.', color: '#FF4D00', status: 'Active' },
+  { name: 'AI in Medicine', desc: 'Diagnostic automation, treatment recommendations, and clinical validation studies.', color: '#D4A254', status: 'Active' },
+  { name: 'Astronomy & Data', desc: 'Small-scale orbital observation, stellar nursery analysis, and space-based instrumentation. Hawking said to look up at the stars and not down at your feet. That\'s the plan.', color: '#0038FF', status: 'Upcoming' },
+];
+
+const typeBreakdown = works.reduce((acc: Record<string, number>, w: any) => {
+  const t = w.type || 'other';
+  acc[t] = (acc[t] || 0) + 1;
+  return acc;
+}, {} as Record<string, number>);
+
+const latestYear = works.reduce((max: string | null, w: any) => {
+  if (!w.year) return max;
+  if (!max || w.year > max) return w.year;
+  return max;
+}, null);
+---
+
+<Layout>
+  <main class="min-h-screen w-full bg-off-white text-primary">
+    <div class="max-w-[1600px] mx-auto border-x border-primary/10">
+
+      <!-- Lab Navigation Bar -->
+      <div class="flex justify-between items-center px-5 py-3 border-b border-primary/10 text-xs font-mono tracking-wider text-primary/50">
+        <div class="flex items-center gap-2">
+          <a href="/" class="hover:text-accent-purple transition-colors">← Index</a>
+          <span class="text-primary/15">/</span>
+          <span class="text-accent-purple font-medium">research</span>
+        </div>
+        <div class="flex items-center gap-5">
+          <span class="flex items-center gap-1.5">
+            <span class="w-1.5 h-1.5 rounded-full bg-accent-green animate-pulse"></span>
+            LIVE
+          </span>
+          <span class="hidden md:inline text-primary/35">ORCID: {ORCID_ID}</span>
+        </div>
+      </div>
+
+      <!-- Hero Section -->
+      <header class="border-b border-primary/10 relative overflow-hidden">
+        <!-- Dot grid background — lab graph paper feel -->
+        <div class="absolute inset-0 pointer-events-none" style="background-image: radial-gradient(circle, rgba(30,30,30,0.06) 1px, transparent 1px); background-size: 24px 24px;"></div>
+
+        <div class="relative grid grid-cols-1 lg:grid-cols-12 min-h-[55vh]">
+
+          <!-- Left: Title -->
+          <div class="lg:col-span-7 p-8 md:p-14 lg:p-20 flex flex-col justify-between border-b lg:border-b-0 lg:border-r border-primary/10">
+            <div>
+              <div class="inline-flex items-center gap-2.5 px-4 py-2 rounded-full border border-accent-purple/20 bg-accent-purple/5 text-xs uppercase tracking-[0.2em] font-mono text-accent-purple mb-10">
+                <span class="w-2 h-2 rounded-full bg-accent-purple"></span>
+                Experiment Log
+              </div>
+
+              <h1 class="font-headline text-7xl md:text-8xl lg:text-[8.5rem] leading-[0.85] tracking-tight mb-8">
+                Re<span class="italic">search</span>
+              </h1>
+
+              <p class="max-w-xl text-xl md:text-2xl font-headline leading-relaxed text-primary/60">
+                Exploring how language models and AI can support healthcare in Thailand, from clinical NLP to diagnostic decision support.
+              </p>
+              <p class="max-w-xl text-base font-mono text-primary/30 mt-4 leading-relaxed">
+                As Sheldon Cooper once said, people should know where they stand. If they don't, they need a theoretical physicist to tell them. We use models instead.
+              </p>
+            </div>
+
+            <div class="mt-14 flex items-center gap-5 flex-wrap">
+              <a
+                href={`https://orcid.org/${ORCID_ID}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-2.5 px-6 py-3 bg-accent-purple text-white rounded-full text-base font-medium hover:brightness-110 transition-all"
+              >
+                <svg width="18" height="18" viewBox="0 0 256 256">
+                  <path fill="#A6CE39" d="M256 128c0 70.7-57.3 128-128 128S0 198.7 0 128 57.3 0 128 0s128 57.3 128 128Z"/>
+                  <path fill="#FFF" d="M86.3 186.2H70.9V79.1h15.4v107.1zM108.9 79.1h41.6c39.6 0 57 28.3 57 53.6 0 27.5-21.5 53.6-56.8 53.6h-41.8V79.1zm15.4 93.3h24.5c34.9 0 42.9-26.5 42.9-39.7C191.7 111.2 178 93h-5.3l-24.4 0v79.4zM88.7 56.8c0 5.5-4.5 10.1-10.1 10.1-5.6 0-10.1-4.6-10.1-10.1 0-5.6 4.5-10.1 10.1-10.1 5.6 0 10.1 4.6 10.1 10.1Z"/>
+                </svg>
+                View ORCID Profile
+              </a>
+              <a href="#publications" class="text-base font-mono text-primary/35 hover:text-accent-purple transition-colors uppercase tracking-widest">
+                ↓ Publications
+              </a>
+            </div>
+          </div>
+
+          <!-- Right: Lab Dossier -->
+          <div class="lg:col-span-5 p-8 md:p-10 lg:p-12 flex flex-col justify-between">
+            <div class="space-y-8">
+              <div>
+                <span class="block text-xs font-mono uppercase tracking-[0.2em] text-primary/35 mb-2">Affiliation</span>
+                <p class="font-headline text-2xl leading-tight">Mahidol University</p>
+                <p class="text-base text-primary/45 mt-1">Faculty of ICT</p>
+              </div>
+              <div>
+                <span class="block text-xs font-mono uppercase tracking-[0.2em] text-primary/35 mb-2">Primary Focus</span>
+                <p class="font-headline text-xl leading-tight">Health Informatics & Applied AI</p>
+                <p class="text-base text-primary/45 mt-1">Bridging clinical practice and machine learning</p>
+              </div>
+              <div>
+                <span class="block text-xs font-mono uppercase tracking-[0.2em] text-primary/35 mb-3">Research Domains</span>
+                <div class="flex flex-wrap gap-2.5">
+                  {researchAreas.map((area) => (
+                    <span class={`inline-flex items-center gap-2 px-3.5 py-2 text-sm font-mono rounded-full border bg-white ${area.status === 'Upcoming' ? 'border-dashed border-primary/15 text-primary/40' : 'border-primary/8 text-primary/60'}`}>
+                      <span class={`w-2.5 h-2.5 rounded-full flex-shrink-0 ${area.status === 'Upcoming' ? 'animate-pulse' : ''}`} style={`background-color: ${area.color};`}></span>
+                      {area.name}
+                      {area.status === 'Upcoming' && <span class="text-[9px] uppercase tracking-widest text-accent-purple/60 ml-1">soon</span>}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-10 pt-5 border-t border-primary/10 flex items-center justify-between font-mono text-xs text-primary/30 uppercase tracking-widest">
+              <span>papers: {works.length} · status: active</span>
+              <span>orcid api</span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Stats Strip -->
+      {works.length > 0 && (
+        <div class="grid grid-cols-2 md:grid-cols-4 border-b border-primary/10 divide-x divide-primary/10">
+          <div class="p-5 md:p-8 text-center">
+            <div class="text-3xl md:text-4xl font-headline text-accent-purple">{works.length}</div>
+            <div class="text-xs font-mono uppercase tracking-widest text-primary/35 mt-2">Publications</div>
+          </div>
+          <div class="p-5 md:p-8 text-center">
+            <div class="text-3xl md:text-4xl font-headline text-accent-purple">{Object.keys(typeBreakdown).length}</div>
+            <div class="text-xs font-mono uppercase tracking-widest text-primary/35 mt-2">Categories</div>
+          </div>
+          <div class="p-5 md:p-8 text-center">
+            <div class="text-3xl md:text-4xl font-headline text-accent-purple">{works.filter((w: any) => w.doi).length}</div>
+            <div class="text-xs font-mono uppercase tracking-widest text-primary/35 mt-2">With DOI</div>
+          </div>
+          <div class="p-5 md:p-8 text-center">
+            <div class="text-3xl md:text-4xl font-headline text-accent-purple">{latestYear || '—'}</div>
+            <div class="text-xs font-mono uppercase tracking-widest text-primary/35 mt-2">Latest Year</div>
+          </div>
+        </div>
+      )}
+
+      <!-- Research Areas -->
+      <section class="border-b border-primary/10">
+        <div class="p-5 md:p-8 border-b border-primary/10">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-3 text-sm font-mono uppercase tracking-[0.2em] text-primary/45">
+              <span class="w-2.5 h-2.5 rounded-full bg-accent-purple"></span>
+              Active Research Domains
+            </div>
+            <span class="text-xs font-mono text-primary/25 hidden md:block">classified by area of inquiry</span>
+          </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-primary/10">
+          {researchAreas.map((area) => (
+            <div class={`bg-off-white p-8 md:p-10 relative ${area.status === 'Upcoming' ? 'bg-accent-purple/[0.02]' : ''}`}>
+              <div class="flex items-center gap-3 mb-5">
+                <div class={`w-3.5 h-3.5 rounded-full ${area.status === 'Upcoming' ? 'animate-pulse' : ''}`} style={`background-color: ${area.color};`}></div>
+                {area.status === 'Upcoming' && (
+                  <span class="text-[10px] font-mono uppercase tracking-[0.2em] text-accent-purple bg-accent-purple/8 px-2 py-0.5 rounded-full">Upcoming</span>
+                )}
+              </div>
+              <h3 class="font-headline text-xl md:text-2xl mb-3 leading-tight">{area.name}</h3>
+              <p class="text-base text-primary/50 leading-relaxed">{area.desc}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <!-- Lab Notes / Experiment Log -->
+      <section class="border-b border-primary/10 relative overflow-hidden">
+        <div class="absolute inset-0 pointer-events-none" style="background-image: radial-gradient(circle, rgba(30,30,30,0.04) 1px, transparent 1px); background-size: 24px 24px;"></div>
+        <div class="relative p-8 md:p-14 lg:p-20">
+          <div class="flex items-center gap-3 text-sm font-mono uppercase tracking-[0.2em] text-primary/45 mb-10">
+            <span class="w-2.5 h-2.5 rounded-full bg-accent-orange"></span>
+            Lab Notes
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
+            <div class="space-y-4">
+              <div class="font-mono text-xs text-primary/30 uppercase tracking-widest">Hypothesis #001</div>
+              <p class="font-headline text-lg md:text-xl leading-relaxed text-primary/70">
+                If we can teach a model to read Thai clinical notes, we can dramatically reduce diagnostic turnaround time in under-resourced hospitals. It's not rocket science, as Sheldon would say. It's far more complicated.
+              </p>
+              <p class="font-mono text-sm text-accent-green/50">Status: Concluded ✓</p>
+            </div>
+            <div class="space-y-4">
+              <div class="font-mono text-xs text-primary/30 uppercase tracking-widest">Hypothesis #002</div>
+              <p class="font-headline text-lg md:text-xl leading-relaxed text-primary/70">
+                The real bottleneck in Thai healthcare AI isn't the model. It's the data pipeline. However difficult the problem may seem, as Hawking once wrote, there is always something you can do and succeed at. We proved that in one paper.
+              </p>
+              <p class="font-mono text-sm text-primary/25">Status: Archived</p>
+            </div>
+            <div class="space-y-4">
+              <div class="font-mono text-xs text-primary/30 uppercase tracking-widest">Hypothesis #003</div>
+              <p class="font-headline text-lg md:text-xl leading-relaxed text-primary/70">
+                Sometimes the most interesting data doesn't come from a hospital. It comes from somewhere much younger, much hotter, and 13.8 billion years in the making. The universe began with a bang, and the data it left behind is still waiting.
+              </p>
+              <p class="font-mono text-sm text-accent-purple/50">Status: Prepping ✦</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Publications Index -->
+      <section id="publications">
+        <div class="sticky top-0 z-20 bg-off-white/95 backdrop-blur-md border-b border-primary/10">
+          <div class="flex justify-between items-center p-5 md:p-8 text-sm font-mono uppercase tracking-[0.2em] text-primary/45">
+            <div class="flex items-center gap-3">
+              <span class="w-2.5 h-2.5 rounded-full bg-accent-purple"></span>
+              Publication Index
+            </div>
+            <span class="text-accent-purple font-medium">{works.length} {works.length === 1 ? 'entry' : 'entries'}</span>
+          </div>
+        </div>
+
+        {error && (
+          <div class="p-10 text-center border-b border-primary/10">
+            <p class="text-accent-orange text-base font-mono">[error] {error}</p>
+            <p class="text-primary/35 text-sm mt-3">ORCID API may be temporarily unavailable.</p>
+          </div>
+        )}
+
+        {works.length === 0 && !error && (
+          <div class="p-20 text-center border-b border-primary/10">
+            <p class="font-headline text-3xl text-primary/40">No publications found on ORCID yet.</p>
+            <p class="text-base text-primary/30 font-mono mt-3">Research in progress. Check back later.</p>
+          </div>
+        )}
+
+        <div class="flex flex-col">
+          {works.map((work: any, index: number) => (
+            <article class="border-b border-primary/10 group hover:bg-accent-purple/[0.02] transition-all duration-300 relative">
+              <!-- Hover accent bar -->
+              <div class="absolute left-0 top-0 bottom-0 w-1 bg-accent-purple scale-y-0 group-hover:scale-y-100 transition-transform origin-top duration-500"></div>
+
+              <div class="grid grid-cols-1 md:grid-cols-12 p-6 md:p-10 lg:p-12 gap-5 md:gap-8">
+                <!-- Experiment number -->
+                <div class="md:col-span-1 flex items-start">
+                  <span class="font-mono text-base text-primary/15 group-hover:text-accent-purple/30 transition-colors duration-500">
+                    {String(index + 1).padStart(2, '0')}
+                  </span>
+                </div>
+
+                <!-- Content -->
+                <div class="md:col-span-8 space-y-4">
+                  <div class="flex items-center gap-3 flex-wrap">
+                    <span class="inline-block px-3 py-1 text-xs uppercase tracking-widest font-mono rounded-full bg-accent-purple/8 text-accent-purple border border-accent-purple/15">
+                      {formatType(work.type)}
+                    </span>
+                    <span class="text-sm font-mono text-primary/35">{formatDate(work.year, work.month)}</span>
+                  </div>
+                  <h3 class="font-headline text-2xl md:text-3xl leading-tight group-hover:text-accent-purple transition-colors duration-300">
+                    {work.title}
+                  </h3>
+                  {work.journalTitle && (
+                    <p class="text-base italic text-primary/40 font-headline">{work.journalTitle}</p>
+                  )}
+                </div>
+
+                <!-- Links -->
+                <div class="md:col-span-3 flex flex-col items-start md:items-end justify-center gap-3">
+                  {work.doi && (
+                    <a
+                      href={`https://doi.org/${work.doi}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="inline-flex items-center gap-2 px-5 py-2.5 text-base font-medium text-white bg-accent-purple rounded-full hover:brightness-110 transition-all group/link"
+                    >
+                      <span>Read Paper</span>
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="group-hover/link:translate-x-0.5 transition-transform">
+                        <path d="M7 17L17 7M17 7H7M17 7v10"></path>
+                      </svg>
+                    </a>
+                  )}
+                  {work.doi && (
+                    <span class="text-xs text-primary/25 font-mono break-all md:text-right">{work.doi}</span>
+                  )}
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <!-- Research Philosophy -->
+      <section class="border-b border-primary/10 bg-primary relative overflow-hidden">
+        <!-- Star field decoration -->
+        <div class="absolute inset-0 pointer-events-none" style="background-image: radial-gradient(circle, rgba(255,255,255,0.06) 1px, transparent 1px); background-size: 40px 40px;"></div>
+        <div class="absolute top-8 right-12 w-1 h-1 rounded-full bg-white/20 animate-pulse hidden md:block"></div>
+        <div class="absolute top-24 right-40 w-0.5 h-0.5 rounded-full bg-white/15 hidden md:block"></div>
+        <div class="absolute bottom-16 left-20 w-1 h-1 rounded-full bg-accent-purple/30 animate-pulse hidden md:block"></div>
+
+        <div class="relative p-10 md:p-20 lg:p-28">
+          <div class="max-w-3xl mx-auto text-center">
+            <div class="text-xs font-mono uppercase tracking-[0.3em] text-off-white/40 mb-8 flex items-center justify-center gap-4">
+              <span class="w-8 h-px bg-off-white/15"></span>
+              Research Philosophy
+              <span class="w-8 h-px bg-off-white/15"></span>
+            </div>
+            <blockquote class="font-headline text-2xl md:text-4xl leading-relaxed text-off-white/85 italic">
+              "Intelligence is the ability to adapt to change."
+            </blockquote>
+            <p class="font-mono text-sm text-off-white/30 mt-6 tracking-wide">
+              — Stephen Hawking
+            </p>
+            <p class="font-mono text-sm text-off-white/25 mt-10 tracking-wide">
+              I'm not crazy. My mother had me tested. No, but really, my hypotheses are peer-reviewed.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Soft Landing / What's Next -->
+      <section class="border-b border-primary/10 p-8 md:p-14 lg:p-20">
+        <div class="max-w-3xl">
+          <div class="flex items-center gap-3 text-sm font-mono uppercase tracking-[0.2em] text-primary/45 mb-8">
+            <span class="w-2.5 h-2.5 rounded-full bg-accent-green"></span>
+            What's Next
+          </div>
+          <p class="font-headline text-2xl md:text-3xl leading-relaxed text-primary/70 mb-6">
+            Something small is going up to look at something young. Details soon; we're still doing the math. The greatest enemy of knowledge, as Hawking put it, is not ignorance but the illusion of knowledge.
+          </p>
+          <p class="text-lg text-primary/45 leading-relaxed">
+            Turns out the skills that help you read messy clinical data also help when your data source is a few hundred light-years away and won't sit still. Whether it's the cosmic microwave background or a patient's chart, pattern recognition is pattern recognition.
+          </p>
+          <p class="font-mono text-sm text-primary/25 mt-6">
+            Bazinga. Except in science, the punchline is a p-value.
+          </p>
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <footer class="p-5 md:p-10 flex justify-between items-center text-sm text-primary/40">
+        <div class="flex items-center gap-2.5">
+          <span class="w-2 h-2 rounded-full bg-accent-green animate-pulse"></span>
+          <span class="font-mono">connected to orcid.org</span>
+        </div>
+        <a href="/" class="font-mono uppercase tracking-widest hover:text-accent-purple transition-colors">← Back to Index</a>
+      </footer>
+
+    </div>
+  </main>
+</Layout>
+
+<style>
+  .font-mono {
+    font-family: var(--font-mono);
+  }
+</style>

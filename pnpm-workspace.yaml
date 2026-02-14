@@ -1,0 +1,5 @@
+approveBuilds: esbuild
+
+ignoredBuiltDependencies:
+  - esbuild
+  - sharp

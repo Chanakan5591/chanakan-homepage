@@ -1,0 +1,138 @@
+@import "tailwindcss";
+
+@theme {
+    --color-primary: #1E1E1E;
+    --color-off-white: #F7F5F2;
+    --color-accent-orange: #FF4D00;
+    --color-accent-blue: #0038FF;
+    --color-accent-green: #00CC66;
+    --color-accent-purple: #9D00FF;
+    --color-accent-amber: #D4A254;
+    --font-sans: 'Inter', ui-sans-serif, system-ui;
+    --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+    --animate-spin-slow: spin 12s linear infinite;
+}
+
+@layer base {
+    body {
+        @apply text-primary font-sans antialiased;
+        background-color: var(--color-off-white);
+    }
+    
+    html {
+        scroll-behavior: smooth;
+    }
+    
+    ::selection {
+        background-color: var(--color-accent-blue);
+        color: white;
+    }
+}
+
+/* Safari/Webkit Hover Fixes */
+@layer utilities {
+    /* Explicit group-hover styles for Safari compatibility */
+    .group:hover .group-hover\:text-accent-blue {
+        color: var(--color-accent-blue);
+    }
+    .group:hover .group-hover\:text-accent-orange {
+        color: var(--color-accent-orange);
+    }
+    .group:hover .group-hover\:text-accent-green {
+        color: var(--color-accent-green);
+    }
+    .group:hover .group-hover\:text-accent-purple {
+        color: var(--color-accent-purple);
+    }
+    .group:hover .group-hover\:bg-accent-blue {
+        background-color: var(--color-accent-blue);
+    }
+    .group:hover .group-hover\:bg-accent-orange {
+        background-color: var(--color-accent-orange);
+    }
+    .group:hover .group-hover\:bg-accent-green {
+        background-color: var(--color-accent-green);
+    }
+    .group:hover .group-hover\:bg-accent-purple {
+        background-color: var(--color-accent-purple);
+    }
+    .group:hover .group-hover\:rotate-45 {
+        -webkit-transform: rotate(45deg);
+        transform: rotate(45deg);
+    }
+    .group:hover .group-hover\:scale-105 {
+        -webkit-transform: scale(1.05);
+        transform: scale(1.05);
+    }
+    .group:hover .group-hover\:grayscale-0 {
+        -webkit-filter: grayscale(0);
+        filter: grayscale(0);
+    }
+    .group:hover .group-hover\:opacity-100 {
+        opacity: 1;
+    }
+
+    /* Direct hover styles with webkit prefixes */
+    .hover\:bg-accent-blue:hover {
+        background-color: var(--color-accent-blue);
+    }
+    .hover\:bg-accent-orange:hover {
+        background-color: var(--color-accent-orange);
+    }
+    .hover\:text-white:hover {
+        color: white;
+    }
+    .hover\:text-accent-blue:hover {
+        color: var(--color-accent-blue);
+    }
+    .hover\:underline:hover {
+        text-decoration-line: underline;
+    }
+    .hover\:grayscale-0:hover {
+        -webkit-filter: grayscale(0);
+        filter: grayscale(0);
+    }
+
+    /* Force hardware acceleration */
+    .group,
+    [class*="hover:"],
+    [class*="group-hover:"] {
+        -webkit-transform: translateZ(0);
+        transform: translateZ(0);
+    }
+}
+
+@keyframes bounce-slow {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(25%); }
+}
+.animate-bounce-slow {
+  animation: bounce-slow 2s infinite;
+}
+
+.font-headline {
+    font-family: "Newsreader", serif;
+    font-weight: 350;
+    font-style: normal;
+    font-optical-sizing: auto;
+    letter-spacing: -0.03em;
+    font-variation-settings: "wght" 350;
+}
+
+/* Custom Scrollbar for Webkit */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #F7F5F2;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #1E1E1E;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #FF4D00;
+}
