@@ -65,11 +65,11 @@ const displayRepos = pinnedRepos.length > 0 ? pinnedRepos : topRepos.slice(0, 6)
           </h1>
 
           <p class="max-w-2xl text-lg md:text-xl leading-relaxed text-off-white/60 mb-8">
-            Open-source projects, side experiments, infrastructure work, and cybersecurity explorations. Everything here is pulled live from GitHub. Like Elliot Alderson, I wanted to save the world. We start with cleaner code.
+            Open-source projects, side experiments, infrastructure, and some security work. Everything on this page is pulled live from GitHub.
           </p>
 
-          {!error && profile && (
           <!-- Stats Strip -->
+          {!error && profile && (
           <div class="grid grid-cols-2 md:grid-cols-4 gap-px bg-off-white/10 border border-off-white/10 rounded">
             <div class="bg-primary p-4 md:p-6">
               <div class="text-xs uppercase tracking-widest text-off-white/40 mb-1">Repositories</div>
@@ -99,8 +99,8 @@ const displayRepos = pinnedRepos.length > 0 ? pinnedRepos : topRepos.slice(0, 6)
         </div>
       )}
 
-      {!error && (
       <!-- Contribution Graph Section -->
+      {!error && (
       <section class="border-b border-off-white/10 p-6 md:p-12 lg:p-16">
         <div class="flex items-center gap-3 mb-8">
           <span class="text-accent-green text-sm">■</span>
@@ -175,7 +175,7 @@ const displayRepos = pinnedRepos.length > 0 ? pinnedRepos : topRepos.slice(0, 6)
           <div class="bg-primary p-6">
             <div class="text-xs uppercase tracking-widest text-accent-green/70 mb-2">Interests</div>
             <div class="font-headline text-lg mb-2">Server Management</div>
-            <p class="text-sm text-off-white/50 leading-relaxed">Linux administration, Docker, reverse proxies, DNS. The invisible plumbing that people rely on every day without thinking about it. The least we can do is keep it running.</p>
+            <p class="text-sm text-off-white/50 leading-relaxed">Linux administration, Docker, reverse proxies, DNS. The plumbing nobody notices until it breaks. Mostly I'm trying to keep mine from breaking.</p>
           </div>
         </div>
       </section>

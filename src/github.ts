@@ -1,8 +1,9 @@
+import { getSecret } from 'astro:env/server';
 
 import { cachedFetch } from './cache';
 
 export async function fetchGitHub(query: string, variables = {}) {
-    const token = import.meta.env.GITHUB_TOKEN;
+    const token = getSecret('GITHUB_TOKEN');
     const GITHUB_API = "https://api.github.com/graphql";
 
     const res = await fetch(GITHUB_API, {

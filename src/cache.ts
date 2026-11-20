@@ -1,3 +1,4 @@
+import { getSecret } from 'astro:env/server';
 import { Redis } from '@upstash/redis';
 
 let redis: Redis | null = null;
@@ -5,8 +6,8 @@ let redis: Redis | null = null;
 function getRedis(): Redis | null {
   if (redis) return redis;
 
-  const url = import.meta.env.UPSTASH_REDIS_REST_URL;
-  const token = import.meta.env.UPSTASH_REDIS_REST_TOKEN;
+  const url = getSecret('UPSTASH_REDIS_REST_URL');
+  const token = getSecret('UPSTASH_REDIS_REST_TOKEN');
 
   if (!url || !token) {
     console.warn('[cache] UPSTASH_REDIS_REST_URL or UPSTASH_REDIS_REST_TOKEN not set — caching disabled');

@@ -1,3 +1,4 @@
+import { getSecret } from 'astro:env/server';
 import { cachedFetch } from './cache';
 
 interface UnsplashPhoto {
@@ -30,7 +31,7 @@ interface UnsplashPhoto {
 }
 
 export async function fetchUnsplashPhotos(username: string, perPage = 30): Promise<UnsplashPhoto[]> {
-    const accessKey = import.meta.env.UNSPLASH_ACCESS_KEY;
+    const accessKey = getSecret('UNSPLASH_ACCESS_KEY');
     if (!accessKey) {
         console.error('UNSPLASH_ACCESS_KEY not set');
         return [];
@@ -54,7 +55,7 @@ export async function fetchUnsplashPhotos(username: string, perPage = 30): Promi
 }
 
 export async function fetchUnsplashUser(username: string) {
-    const accessKey = import.meta.env.UNSPLASH_ACCESS_KEY;
+    const accessKey = getSecret('UNSPLASH_ACCESS_KEY');
     if (!accessKey) {
         console.error('UNSPLASH_ACCESS_KEY not set');
         return null;
